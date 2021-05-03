@@ -49,7 +49,7 @@ namespace HexGridStandard
             return true;
         }
 
-        public CubeCoordinate(Vector3<int> position)
+        public CubeCoordinate(Vector3 position)
           : base(position.X, position.Y, position.Z)
         {
         }
@@ -85,16 +85,16 @@ namespace HexGridStandard
             return Add(Directions[direction]);
         }
 
-        public Vector3<float> ConvertToWorld(float unitZ = float.NaN, Orientation orientation = Orientation.FlatTop)
+        public (float x,float y,float z) ConvertToWorld(float unitZ = float.NaN, Orientation orientation = Orientation.FlatTop)
         {
             if (orientation == Orientation.PointyTop)
-                return new Vector3<float>
+                return
                 (
                     x: (float)(Size * Math.Sqrt(3.0) * (Position.X + Position.Z / 2.0)),
                     y: -1.5f * Size * Position.Z,
                     z: float.IsNaN(unitZ) ? 0.0f : unitZ
                 );
-            return new Vector3<float>
+            return
             (
                 x: -1.5f * Size * Position.X,
                 y: (float)(Size * Math.Sqrt(3.0) * (Position.Z + Position.X / 2.0)),

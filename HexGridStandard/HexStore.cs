@@ -6,12 +6,21 @@ namespace HexGridStandard
 {
     public class HexStore<TKey, TValue>
     {
-        public Dictionary<TKey, TValue> _store {get;set; } = new Dictionary<TKey, TValue>();
+        public Dictionary<TKey, TValue> _store {get;set; }
 
         public int Count => _store.Count;
 
         public TValue this[TKey key] => _store[key];
 
+        public HexStore()
+        {
+             _store = new Dictionary<TKey, TValue>();
+        }
+
+        public HexStore(int capacity)
+        {
+            _store = new Dictionary<TKey, TValue>(capacity);
+        }
         public void Remove(TKey pos, Func<TKey, bool> removal)
         {
             if (!_store.TryGetValue(pos, out _) || !removal(pos))

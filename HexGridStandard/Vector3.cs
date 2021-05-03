@@ -4,12 +4,12 @@ using System.Text;
 
 namespace HexGridStandard
 {
-    public class Vector3<T> where T : struct, IComparable
+    public struct Vector3 : IEquatable<Vector3>//<T> where T : struct, IComparable
     {
-        public T X { get; private set; }
-        public T Y { get; private set; }
-        public T Z { get; private set; }
-        public Vector3(T x, T y, T z)
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        public int Z { get; private set; }
+        public Vector3(int x, int y, int z)
         {
             X = x;
             Y = y;
@@ -17,9 +17,24 @@ namespace HexGridStandard
         }
         public override bool Equals(object obj)
         {
-            if (!(obj is Vector3<T> vector3))
+            if (!(obj is Vector3 vector3))
                 return false;
-            return vector3.X.Equals(X) && vector3.Y.Equals(Y) && vector3.Z.Equals(Z);
+            return Equals(vector3);
+        }
+
+        public bool Equals(Vector3 obj)
+        {
+            return obj.X ==X && obj.Y == Y && obj.Z ==Z;
+        }
+
+        public static bool operator ==(Vector3 left, Vector3 right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Vector3 left, Vector3 right)
+        {
+            return !left.Equals(right);
         }
 
         public override int GetHashCode()

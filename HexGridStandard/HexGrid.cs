@@ -23,7 +23,7 @@ namespace HexGridStandard
                 throw new ArgumentOutOfRangeException(nameof(radius), "Can't have zero or negative radius");
             var objList1 = new List<T>();
             var direction1 = CubeCoordinate.Directions[HexDirections.BottomLeft];
-            direction1.Position = new Vector3<int>(direction1.Position.X * radius, direction1.Position.Y * radius, direction1.Position.Z * radius);
+            direction1.Position = new Vector3(direction1.Position.X * radius, direction1.Position.Y * radius, direction1.Position.Z * radius);
             var cubeCoordinate = center.Add(direction1);
             for (var direction2 = 0; direction2 < 6; ++direction2)
             {
@@ -31,7 +31,7 @@ namespace HexGridStandard
                 {
                     var objList2 = objList1;
                     var obj = new T();
-                    obj.Position = new Vector3<int>(cubeCoordinate.Position.X, cubeCoordinate.Position.Y, cubeCoordinate.Position.Z);
+                    obj.Position = new Vector3(cubeCoordinate.Position.X, cubeCoordinate.Position.Y, cubeCoordinate.Position.Z);
                     objList2.Add(obj);
                     cubeCoordinate = cubeCoordinate.Neighbour(direction2);
                 }
@@ -61,7 +61,7 @@ namespace HexGridStandard
                 {
                     var num = -index1 - index2;
                     var obj1 = new T();
-                    obj1.Position = new Vector3<int>(index1, index2, num);
+                    obj1.Position = new Vector3(index1, index2, num);
                     var obj2 = obj1.Add(center);
                     objList.Add(obj2);
                     inCompilationAction?.Invoke(obj2);
@@ -102,7 +102,7 @@ namespace HexGridStandard
         private static T Lerp(Coordinate a, Coordinate b, float t)
         {
             var obj = new T();
-            obj.Position = new Vector3<int>((int)Math.Floor(Lerp(a.Position.X, b.Position.X, t))
+            obj.Position = new Vector3((int)Math.Floor(Lerp(a.Position.X, b.Position.X, t))
                 , (int)Math.Floor(Lerp(a.Position.Y, b.Position.Y, t))
                 , (int)Math.Floor(Lerp(a.Position.Z, b.Position.Z, t)));
             return obj;
