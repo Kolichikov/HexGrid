@@ -25,6 +25,11 @@ namespace HexGridStandard
             return (float)((Math.Abs(position1.X - position2.X) + (double)Math.Abs(position1.Y - position2.Y) + Math.Abs(position1.Z - position2.Z)) / 2.0);
         }
 
+        public static float Distance(Vector3 c1, Vector3 c2)
+        {
+            return (float)((Math.Abs(c1.X - c2.X) + (double)Math.Abs(c1.Y - c2.Y) + Math.Abs(c1.Z - c2.Z)) / 2.0);
+        }
+
         public CubeCoordinate NearestHex()
         {
             var cube = ConvertToCube();

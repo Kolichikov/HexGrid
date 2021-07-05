@@ -85,6 +85,13 @@ namespace HexGridStandard
             return Add(Directions[direction]);
         }
 
+        public static CubeCoordinate Neighbour(Vector3 centre, HexDirections direction)
+        {
+            var d = Directions[direction];
+            var obj = new CubeCoordinate(centre.X + d.Position.X, centre.Y + d.Position.Y, centre.Z + d.Position.Z);
+            return obj;
+        }
+
         public (float x,float y,float z) ConvertToWorld(float unitZ = float.NaN, Orientation orientation = Orientation.FlatTop)
         {
             if (orientation == Orientation.PointyTop)

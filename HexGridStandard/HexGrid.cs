@@ -51,6 +51,18 @@ namespace HexGridStandard
             return Math.Max(zDiff, Math.Max(xDiff, yDiff)) == radius;
         }
 
+        public bool OnRing(Vector3 inTest, int radius, Vector3 centre)
+        {
+            if (radius < 1)
+                throw new ArgumentOutOfRangeException(nameof(radius), "Can't have zero or negative radius");
+
+            var xDiff = Math.Abs(centre.X - inTest.X);
+            var yDiff = Math.Abs(centre.Y - inTest.Y);
+            var zDiff = Math.Abs(centre.Z - inTest.Z);
+
+            return Math.Max(zDiff, Math.Max(xDiff, yDiff)) == radius;
+        }
+
 
         public List<T> Range(int range, T center, Action<T> inCompilationAction = null)
         {
