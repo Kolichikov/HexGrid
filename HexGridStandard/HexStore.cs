@@ -26,6 +26,11 @@ namespace HexGridStandard
 	        for(int i = 0; i < _values.Count; i++) 
                 yield return _values[i];	        
         }
+
+        public IEnumerable<TKey> Keys()
+        {
+            return _keys.Keys;
+        }
         public HexStore(int capacity)
         {
             _values = new List<TValue>(capacity);
