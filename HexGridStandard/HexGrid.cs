@@ -12,9 +12,29 @@ namespace HexGridStandard
             throw new NotImplementedException();
         }
 
-        public List<T> Ring<TOutput>(int radius, T center, Func<T, TOutput> interaction)
+        public List<T> FilteredRing(int radius, T center, Func<T, bool> filter, Action<T> interaction = null, bool invokeInteractionOnFilteredOnly = true)
         {
-            throw new NotImplementedException();
+            if (radius < 1)
+                throw new ArgumentOutOfRangeException(nameof(radius), "Can't have zero or negative radius");
+            var objList1 = new List<T>();
+            var direction1 = CubeCoordinate.Directions[HexDirections.BottomLeft];
+            direction1.Position = new Vector3(direction1.Position.X * radius, direction1.Position.Y * radius, direction1.Position.Z * radius);
+            var cubeCoordinate = center.Add(direction1);
+            for (var direction2 = 0; direction2 < 6; ++direction2)
+            {
+                for (var index = 0; index < radius; ++index)
+                {
+                    var obj = new T();
+                    obj.Position = new Vector3(cubeCoordinate.Position.X, cubeCoordinate.Position.Y, cubeCoordinate.Position.Z);
+                    var filterResult = filter(obj);
+                    if(filterResult)
+                        objList1.Add(obj);
+                    if(filterResult || !invokeInteractionOnFilteredOnly)
+                        interaction(obj);
+                    cubeCoordinate = cubeCoordinate.Neighbour(direction2);
+                }
+            }
+            return objList1;
         }
 
         public List<T> Ring(int radius, T center)
@@ -23,8 +43,8 @@ namespace HexGridStandard
                 throw new ArgumentOutOfRangeException(nameof(radius), "Can't have zero or negative radius");
             var objList1 = new List<T>();
             var direction1 = CubeCoordinate.Directions[HexDirections.BottomLeft];
-            direction1.Position = new Vector3(direction1.Position.X * radius, direction1.Position.Y * radius, direction1.Position.Z * radius);
-            var cubeCoordinate = center.Add(direction1);
+            var position = new Vector3(direction1.Position.X * radius, direction1.Position.Y * radius, direction1.Position.Z * radius);
+            var cubeCoordinate = center.Add(new CubeCoordinate(position));
             for (var direction2 = 0; direction2 < 6; ++direction2)
             {
                 for (var index = 0; index < radius; ++index)
@@ -124,5 +144,11 @@ namespace HexGridStandard
         {
             return start + (finish - start) * amount;
         }
+
+        //public static List<T> Path<K,V>(T start, T finish, HexStore<K,V> board, Func<T,K> keyFunction, Func<T,T,float> costFunction)
+        //{
+
+        //    throw new NotImplementedException();
+        //}
     }
 }

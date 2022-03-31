@@ -44,6 +44,11 @@ namespace HexGridStandard
         {
         }
 
+        public CubeCoordinate(int x, int y)
+          : base(x, y, 0-x-y)
+        {
+        }
+
         public override bool IsCube()
         {
             return true;
